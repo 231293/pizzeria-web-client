@@ -1,0 +1,16 @@
+<div id="cart-container" data-spy="affix" data-offset-top="10" class="affix-top">
+  <h1>Your Cart <span class="badge" id="cartItems"></span></h1>
+  <div class="cart" id="cart">
+    <div *ngIf="!pizzas.length">Your Cart is Impty</div>
+    <div *ngIf="pizzas.length">
+      <app-cart-items [item]="pizza" *ngFor="let pizza of pizzas"></app-cart-items>
+    </div>
+    <hr/>
+    <div id="prices">
+      <div class="">
+        <strong>Total Price: {{totalPrice}}</strong>
+        <button [disabled]="!pizzas.length" class="btn btn-info btn-block" (click)="placeOrder()">Place Order</button>
+      </div>
+    </div>
+  </div>
+</div>

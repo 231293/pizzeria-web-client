@@ -1,0 +1,5 @@
+<div class="toppings-selector d-flex flex-column item-selector p-1">
+  <div class="toppings-image"><img [src]="topping.imagePath"> </div>
+  <!-- <span><b>Price:120</b></span> -->
+  <button class="btn btn-sm btn-outline-success" (click)="addOrRemoveToppings()">{{isAdd? 'Add': 'Remove'}}</button>
+</div>

@@ -1,0 +1,86 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Customize Your Pizza</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p class="sidebar-header">Extra Cheese ₹ {{extraCheesePrice}}</p>
+    <div class="cheese p-1 d-flex flex-wrap">
+      <div class="cheese-selector item-selector">
+        <div class="form-check">
+          <input class="form-check-input" (change)="onExtraCheeseClicked($event)" type="checkbox" value=""
+            id="defaultCheck1">
+          <label class="form-check-label" for="defaultCheck1">
+            I want to add extra cheese
+          </label>
+        </div>
+      </div>
+    </div>
+    <p class="sidebar-header">Toppings ₹ {{toppingPrice}} each</p>
+    <div class="toppings p-1 d-flex flex-wrap">
+      <app-topping *ngFor="let topping of toppings" [topping]="topping" (onClick)="onToppingChange($event)">
+      </app-topping>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="d-flex">
+      <div>
+        <span>₹ {{ price }}</span>
+        <button (click)="modal.close()" class="btn btn-success btn-sm">
+          <span>ADD TO CART</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<div class="card mb-4 shadow-sm">
+  <img class="card-img-top"  [src]="menu.imagePath">
+  <div class="card-body">
+    <p class="card-text">
+    <h5>{{menu.name}}
+      <img *ngIf="menu.isVeg" width="30px" src="https://img.icons8.com/color/2x/vegetarian-food-symbol.png">
+      <img *ngIf="!menu.isVeg" width="30px" src="https://img.icons8.com/color/2x/non-vegetarian-food-symbol.png">
+      ₹ {{price}}
+    </h5>
+    <p>{{menu.description}}</p>
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <span>Size</span>
+        <div class="dropdown">
+          <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-outline-primary font-size-10" id="selectSize"
+              ngbDropdownToggle>{{selectedSize.name}}</button>
+            <div ngbDropdownMenu aria-labelledby="selectSize">
+              <button ngbDropdownItem *ngFor="let size of menu.availableSizes"
+                (click)="onSizeChange(size)">{{size.name}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <span>Crust</span>
+        <div class="dropdown">
+          <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-outline-primary font-size-10" id="selectSize"
+              ngbDropdownToggle>{{selectedCrust.name}}</button>
+            <div ngbDropdownMenu aria-labelledby="selectSize">
+              <button ngbDropdownItem *ngFor="let crust of selectedSize.availableCrusts"
+                (click)="onCrustChange(crust)">{{crust.name}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-3 d-flex space-around float-right">
+      <div *ngIf="!hasAddedToCart" class="btn-group">
+        <button type="button" (click)="openCustomizeModal(content)" class="btn btn-sm btn-outline-secondary">Add To
+          Cart</button>
+      </div>
+      <div *ngIf="hasAddedToCart">
+        <app-counter (onChange)="onCounterChange($event)"></app-counter>
+      </div>
+    </div>
+  </div>
+</div>
